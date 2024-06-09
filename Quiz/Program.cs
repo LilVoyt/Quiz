@@ -1,6 +1,8 @@
 ﻿using Quiz.Data;
 using Quiz.Models;
 using Quiz.Service;
+using Quiz.Service.ConsoleInterface.Interfaces;
+using Quiz.Service.ConsoleInterface.RealiseClass;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,8 +58,21 @@ namespace Quiz
             //User user2 = authorisation.SignUp("qwert", "12345", "Oleg", "oleg@gmail.com", DateTime.Now);
             //Console.WriteLine(user2.Login);
 
-            Console.WriteLine(Enum.GetName(typeof(RoleType), user1.Role));
+            Console.WriteLine(user1.Role);
 
+            user.Role = RoleType.User;
+
+            IRoleUI roleUI;
+            if (user.Role == RoleType.Admin)
+            {
+                roleUI = new AdminUI();
+            }
+            else
+            {
+                roleUI = new UserUI();
+            }
+            roleUI.DisplayMenu();
+            roleUI.
         }
     }
 }
