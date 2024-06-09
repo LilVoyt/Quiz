@@ -7,6 +7,13 @@ using System.Threading.Tasks;
 
 namespace Quiz.Models
 {
+    public enum RoleType
+    {
+        Admin,
+        Moderator,
+        User,
+    }
+
     internal class User
     {
         public int Id { get; set; }
@@ -15,7 +22,6 @@ namespace Quiz.Models
         public string Email { get; set; }
         public string Password { get; set; }
         public DateTime Birthday { get; set; }
-        public int RoleId { get; set; }
-        public virtual Role Roles { get; set; } = null;
+        public RoleType Role { get; set; }
     }
 }

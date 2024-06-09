@@ -12,7 +12,6 @@ namespace Quiz.Data
     internal class QuizContext : DbContext
     {
         public DbSet<User> Users { get; set; } = null;
-        public DbSet<Role> Roles { get; set; } = null;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

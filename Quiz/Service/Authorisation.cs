@@ -20,7 +20,7 @@ namespace Quiz.Service
 
         public User Login(string login, string password)
         {
-            var user = _context.Users.SingleOrDefault(u => u.Login == login && u.Password == password);
+            var user = _context.Users.FirstOrDefault(u => u.Login == login && u.Password == password);
             return user;
         }
 
@@ -33,7 +33,7 @@ namespace Quiz.Service
                 Email = email,
                 Password = password,
                 Birthday = birthday,
-                RoleId = 1
+                Role = RoleType.User,
             };
             _context.Users.Add(user);
             _context.SaveChanges();

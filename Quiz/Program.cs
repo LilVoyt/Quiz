@@ -15,54 +15,49 @@ namespace Quiz
         {
             QuizContext context = new QuizContext();
 
-            //Role role = new Role()
-            //{
-            //    Name = "Test",
-            //    Description = "Test",
-            //    Permisions = "delete, change, other"
-            //};
-            //context.Roles.Add(role);
-            //context.SaveChanges();
-            //User user = new User()
-            //{
-            //    Login = "login",
-            //    Name = "Test",
-            //    Email = "test@gmail.com",
-            //    Password = "Password",
-            //    Birthday = DateTime.Now,
-            //    RoleId = 1
-            //};
-            //context.Users.Add(user);
-            //context.SaveChanges();
-
-            Console.WriteLine("good");
-
-            var userName = context.Users.Select(x => x.Name);
-            foreach(var u in userName)
+            User user = new User()
             {
-                Console.WriteLine(u);
-            }
+                Login = "login",
+                Name = "Test",
+                Email = "test@gmail.com",
+                Password = "Password",
+                Birthday = DateTime.Now,
+                Role = RoleType.Moderator,
+            };
+            context.Users.Add(user);
+            context.SaveChanges();
 
-            var Join = context.Users.Join(context.Roles,
-                user => user.RoleId,
-                role => role.Id,
-                (user, role) => new
-                {
-                    UserName = user.Name,
-                    RoleName = role.Name
-                });
-            foreach(var u in Join)
-            {
-                Console.WriteLine($"{u.UserName} => {u.RoleName}");
-            }
+            //Console.WriteLine("good");
+
+            //var userName = context.Users.Select(x => x.Name);
+            //foreach(var u in userName)
+            //{
+            //    Console.WriteLine(u);
+            //}
+
+            //var Join = context.Users.Join(context.Roles,
+            //    user => user.RoleId,
+            //    role => role.Id,
+            //    (user, role) => new
+            //    {
+            //        UserName = user.Name,
+            //        RoleName = role.Name
+            //    });
+            //foreach(var u in Join)
+            //{
+            //    Console.WriteLine($"{u.UserName} => {u.RoleName}");
+            //}
 
             Authorisation authorisation = new Authorisation(context);
 
             User user1 = authorisation.Login("login", "Password");
-            Console.WriteLine(user1.Email);
+            //Console.WriteLine(user1.Email);
 
-            User user2 = authorisation.SignUp("qwert", "12345", "Oleg", "oleg@gmail.com", DateTime.Now);
-            Console.WriteLine(user2.Login);
+            //User user2 = authorisation.SignUp("qwert", "12345", "Oleg", "oleg@gmail.com", DateTime.Now);
+            //Console.WriteLine(user2.Login);
+
+            Console.WriteLine(Enum.GetName(typeof(RoleType), user1.Role));
+
         }
     }
 }
