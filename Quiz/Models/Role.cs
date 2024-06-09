@@ -13,5 +13,6 @@ namespace Quiz.Models
         public string Description { get; set; }
         public string Permisions { get; set; }
         public virtual ICollection<Role> Roles { get; set; } = null;
+
     }
 }

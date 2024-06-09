@@ -16,7 +16,7 @@ namespace Quiz.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=LAPTOP-U5SNHKPD\\SQLEXPRESS;Database=Quiz;Integrated Security=True;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS01;Database=Quiz;Integrated Security=True;TrustServerCertificate=True");
         }
     }
 }

@@ -11,16 +11,33 @@ namespace Quiz.Service
 {
     internal class Authorisation
     {
-        private List<User> Users { get; set; }
+        private QuizContext _context { get; set; }
 
         public Authorisation(QuizContext context)
         {
-            Users = context.Users.ToList();
+            _context = context;
         }
 
         public User Login(string login, string password)
         {
-            var user = Users.Find(u => u.Login == login && u.Password == password);
+            var user = _context.Users.SingleOrDefault(u => u.Login == login && u.Password == password);
+            return user;
+        }
+
+        public User SignUp(string login, string password, string name, string email, DateTime birthday)
+        {
+            User user = new User()
+            {
+                Login = login,
+                Name = name,
+                Email = email,
+                Password = password,
+                Birthday = birthday,
+                RoleId = 1
+            };
+            _context.Users.Add(user);
+            _context.SaveChanges();
+
             return user;
         }
     }

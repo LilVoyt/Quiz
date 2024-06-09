@@ -12,7 +12,7 @@ using Quiz.Data;
 namespace Quiz.Migrations
 {
     [DbContext(typeof(QuizContext))]
-    [Migration("20240609131026_InitialMigration")]
+    [Migration("20240609153336_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />

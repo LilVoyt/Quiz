@@ -37,8 +37,8 @@ namespace Quiz
 
             Console.WriteLine("good");
 
-            var user = context.Users.Select(x => x.Name);
-            foreach(var u in user)
+            var userName = context.Users.Select(x => x.Name);
+            foreach(var u in userName)
             {
                 Console.WriteLine(u);
             }
@@ -60,6 +60,9 @@ namespace Quiz
 
             User user1 = authorisation.Login("login", "Password");
             Console.WriteLine(user1.Email);
+
+            User user2 = authorisation.SignUp("qwert", "12345", "Oleg", "oleg@gmail.com", DateTime.Now);
+            Console.WriteLine(user2.Login);
         }
     }
 }
