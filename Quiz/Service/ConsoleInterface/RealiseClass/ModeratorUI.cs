@@ -11,12 +11,17 @@ namespace Quiz.Service.ConsoleInterface.RealiseClass
     {
         public void DisplayMenu()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("DisplayMenu");
+        }
+
+        public void ChooseFunction()
+        {
+            ManageUsers();
         }
 
         public void ManageUsers()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("ManageUsers");
         }
     }
 }

@@ -15,6 +15,11 @@ namespace Quiz.Service.ConsoleInterface.RealiseClass
             Console.WriteLine("2. View Reports");
         }
 
+        public void ChooseFunction()
+        {
+            ManageUsers();
+        }
+
         public void ManageUsers()
         {
             Console.WriteLine("Managing users...");

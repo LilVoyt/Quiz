@@ -9,5 +9,6 @@ namespace Quiz.Service.ConsoleInterface.Interfaces
     internal interface IRoleUI
     {
         void DisplayMenu();
+        void ChooseFunction();
     }
 }

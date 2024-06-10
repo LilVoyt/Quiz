@@ -60,7 +60,7 @@ namespace Quiz
 
             Console.WriteLine(user1.Role);
 
-            user.Role = RoleType.User;
+            user.Role = RoleType.Admin;
 
             IRoleUI roleUI;
             if (user.Role == RoleType.Admin)
@@ -72,7 +72,7 @@ namespace Quiz
                 roleUI = new UserUI();
             }
             roleUI.DisplayMenu();
-            roleUI.
+            roleUI.ChooseFunction();
         }
     }
 }
