@@ -18,14 +18,77 @@ namespace Quiz.Service
             _context = context;
         }
 
-        public User Login(string login, string password)
+        public User Start()
         {
-            var user = _context.Users.FirstOrDefault(u => u.Login == login && u.Password == password);
-            return user;
+            Console.WriteLine("Welcome");
+            Console.WriteLine("Type 1 - Login, 2 - SignUp");
+            int choose = int.Parse(Console.ReadLine());
+            switch (choose)
+            {
+                case 1:
+                    return Login();
+                case 2:
+                    return SignUp();
+            }
+            return null;
         }
 
-        public User SignUp(string login, string password, string name, string email, DateTime birthday)
+        public User Login()
         {
+            Console.Clear();
+            Thread.Sleep(1000);
+            Console.WriteLine("Enter the login");
+            string login = Console.ReadLine();
+            Console.WriteLine("Enter the password");
+            string password = Console.ReadLine();
+            var user = _context.Users.FirstOrDefault(u => u.Login == login && u.Password == password);
+            if (user != null)
+            {
+                return user;
+            }
+            else
+            {
+                Console.WriteLine("User with this login not exist");
+                Console.WriteLine("Type 1 - Login again, 2 - SignUp");
+                int choose = int.Parse(Console.ReadLine());
+                switch (choose)
+                {
+                    case 1:
+                        return Login();
+                    case 2:
+                        return SignUp();
+                }
+            }
+            return null;
+        }
+
+        public User SignUp()
+        {
+            Console.WriteLine("Enter login:");
+            string login = Console.ReadLine();
+
+            Console.WriteLine("Enter name:");
+            string name = Console.ReadLine();
+
+            Console.WriteLine("Enter email:");
+            string email = Console.ReadLine();
+
+            Console.WriteLine("Enter password:");
+            string password = Console.ReadLine();
+
+            Console.WriteLine("Enter birthday (yyyy-mm-dd):");
+            DateTime birthday;
+            while (!DateTime.TryParse(Console.ReadLine(), out birthday))
+            {
+                Console.WriteLine("Invalid date format. Please enter again (yyyy-mm-dd):");
+            }
+
+            Console.WriteLine("Enter role (Admin, Moderator, User):");
+            RoleType role;
+            while (!Enum.TryParse(Console.ReadLine(), true, out role) || !Enum.IsDefined(typeof(RoleType), role))
+            {
+                Console.WriteLine("Invalid role. Please enter one of the following (Admin, Moderator, User):");
+            }
             User user = new User()
             {
                 Login = login,
@@ -33,7 +96,7 @@ namespace Quiz.Service
                 Email = email,
                 Password = password,
                 Birthday = birthday,
-                Role = RoleType.User,
+                Role = role,
             };
             _context.Users.Add(user);
             _context.SaveChanges();

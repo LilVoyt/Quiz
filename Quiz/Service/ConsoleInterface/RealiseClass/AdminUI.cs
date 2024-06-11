@@ -25,6 +25,8 @@ namespace Quiz.Service.ConsoleInterface.RealiseClass
 
         public void ManageUsers()
         {
+            Console.Clear();
+            Thread.Sleep(1000);
             Console.WriteLine("1. Add user");
             Console.WriteLine("2. Delete user");
             Console.WriteLine("Choose what you need (1, 2):");
@@ -34,6 +36,9 @@ namespace Quiz.Service.ConsoleInterface.RealiseClass
             {
                 Console.WriteLine("Invalid input. Please enter 1 or 2:");
             }
+
+            Console.Clear();
+            Thread.Sleep(1000);
 
             switch (choose)
             {
