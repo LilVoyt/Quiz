@@ -11,7 +11,9 @@ namespace Quiz.Data
 {
     internal class QuizContext : DbContext
     {
-        public DbSet<User> Users { get; set; } = null;
+        public DbSet<User> Users { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Answer> Answers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
