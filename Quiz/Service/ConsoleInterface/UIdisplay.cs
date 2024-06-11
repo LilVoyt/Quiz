@@ -11,21 +11,6 @@ namespace Quiz.Service.ConsoleInterface
 {
     internal class UIdisplay
     {
-        public static IRoleUI CreateStrategy(RoleType role)
-        {
-            return role switch
-            {
-                RoleType.Admin => new AdminUI(),
-                RoleType.Moderator => new ModeratorUI(),
-                RoleType.User => new UserUI(),
-                _ => throw new ArgumentException("Invalid role type"),
-            };
-        }
-
-        public static void DrawUI(IRoleUI roleUI)
-        {
-            roleUI.DisplayMenu();
-            roleUI.ChooseFunction();
-        }
+        
     }
 }

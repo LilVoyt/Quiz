@@ -11,6 +11,11 @@ namespace Quiz.Service.ConsoleInterface.RealiseClass
 {
     internal class AdminUI : IAdminUI
     {
+        public User _User {  get; set; }
+        public AdminUI(User user)
+        {
+            _User = user;
+        }
         public void DisplayMenu()
         {
             Console.WriteLine("1. Manage Users");

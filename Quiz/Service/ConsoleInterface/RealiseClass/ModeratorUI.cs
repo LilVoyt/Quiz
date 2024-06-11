@@ -1,4 +1,5 @@
-﻿using Quiz.Service.ConsoleInterface.Interfaces;
+﻿using Quiz.Models;
+using Quiz.Service.ConsoleInterface.Interfaces;
 using Quiz.Service.Functionality;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,11 @@ namespace Quiz.Service.ConsoleInterface.RealiseClass
 {
     internal class ModeratorUI : IModeratorUI
     {
+        public User _User { get; set; }
+        public ModeratorUI(User user)
+        {
+            _User = user;
+        }
         public void DisplayMenu()
         {
             Console.WriteLine("1. Manage Users");

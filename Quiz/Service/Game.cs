@@ -1,6 +1,8 @@
 ﻿using Quiz.Data;
 using Quiz.Models;
 using Quiz.Service.ConsoleInterface;
+using Quiz.Service.ConsoleInterface.Interfaces;
+using Quiz.Service.ConsoleInterface.RealiseClass;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +24,24 @@ namespace Quiz.Service
 
             User = authorisation.Start();
 
-            UIdisplay.DrawUI(UIdisplay.CreateStrategy(User.Role));
+            DrawUI(CreateStrategy(User));
+        }
+        public static IRoleUI CreateStrategy(User user)
+        {
+            var role = user.Role;
+            return role switch
+            {
+                RoleType.Admin => new AdminUI(user),
+                RoleType.Moderator => new ModeratorUI(user),
+                RoleType.User => new UserUI(user),
+                _ => throw new ArgumentException("Invalid role type"),
+            };
         }
 
-
+        public static void DrawUI(IRoleUI roleUI)
+        {
+            roleUI.DisplayMenu();
+            roleUI.ChooseFunction();
+        }
     }
 }
