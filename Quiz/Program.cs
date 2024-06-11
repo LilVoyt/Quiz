@@ -1,6 +1,7 @@
 ﻿using Quiz.Data;
 using Quiz.Models;
 using Quiz.Service;
+using Quiz.Service.ConsoleInterface;
 using Quiz.Service.ConsoleInterface.Interfaces;
 using Quiz.Service.ConsoleInterface.RealiseClass;
 using System;
@@ -17,17 +18,17 @@ namespace Quiz
         {
             QuizContext context = new QuizContext();
 
-            User user = new User()
-            {
-                Login = "login",
-                Name = "Test",
-                Email = "test@gmail.com",
-                Password = "Password",
-                Birthday = DateTime.Now,
-                Role = RoleType.Moderator,
-            };
-            context.Users.Add(user);
-            context.SaveChanges();
+            //User user = new User()
+            //{
+            //    Login = "login",
+            //    Name = "Test",
+            //    Email = "test@gmail.com",
+            //    Password = "Password",
+            //    Birthday = DateTime.Now,
+            //    Role = RoleType.Moderator,
+            //};
+            //context.Users.Add(user);
+            //context.SaveChanges();
 
             //Console.WriteLine("good");
 
@@ -52,7 +53,7 @@ namespace Quiz
 
             Authorisation authorisation = new Authorisation(context);
 
-            User user1 = authorisation.Login("login", "Password");
+            User user1 = authorisation.Login("oleg", "1234");
             //Console.WriteLine(user1.Email);
 
             //User user2 = authorisation.SignUp("qwert", "12345", "Oleg", "oleg@gmail.com", DateTime.Now);
@@ -60,19 +61,9 @@ namespace Quiz
 
             Console.WriteLine(user1.Role);
 
-            user.Role = RoleType.Admin;
+            //user1.Role = RoleType.Admin;
 
-            IRoleUI roleUI;
-            if (user.Role == RoleType.Admin)
-            {
-                roleUI = new AdminUI();
-            }
-            else
-            {
-                roleUI = new UserUI();
-            }
-            roleUI.DisplayMenu();
-            roleUI.ChooseFunction();
+            UIdisplay.DrawUI(UIdisplay.CreateStrategy(user1.Role));
         }
     }
 }

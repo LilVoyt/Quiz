@@ -1,4 +1,6 @@
-﻿using Quiz.Service.ConsoleInterface.Interfaces;
+﻿using Quiz.Models;
+using Quiz.Service.ConsoleInterface.Interfaces;
+using Quiz.Service.Functionality;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +15,7 @@ namespace Quiz.Service.ConsoleInterface.RealiseClass
         {
             Console.WriteLine("1. Manage Users");
             Console.WriteLine("2. View Reports");
+            Console.WriteLine("You choosed right think!");
         }
 
         public void ChooseFunction()
@@ -22,7 +25,57 @@ namespace Quiz.Service.ConsoleInterface.RealiseClass
 
         public void ManageUsers()
         {
-            Console.WriteLine("Managing users...");
+            Console.WriteLine("1. Add user");
+            Console.WriteLine("2. Delete user");
+            Console.WriteLine("Choose what you need (1, 2):");
+            int choose;
+
+            while (!int.TryParse(Console.ReadLine(), out choose) || (choose != 1 && choose != 2))
+            {
+                Console.WriteLine("Invalid input. Please enter 1 or 2:");
+            }
+
+            switch (choose)
+            {
+                case 1:
+                    UserInteraction.AddUserFromConsole();
+                    AskToContinue();
+                    break;
+                case 2:
+                    Console.WriteLine("Enter user ID to delete:");
+                    int userId;
+                    while (!int.TryParse(Console.ReadLine(), out userId))
+                    {
+                        Console.WriteLine("Invalid input. Please enter a valid user ID:");
+                    }
+                    UserInteraction.DeleteUser(userId);
+                    Console.WriteLine("User deleted!");
+                    AskToContinue();
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice.");
+                    AskToContinue();
+                    break;
+            }
+        }
+
+        public void AskToContinue()
+        {
+            Console.WriteLine("Do you want to continue(1 - yes, 2 - no)? ");
+            int choose = int.Parse(Console.ReadLine());
+            if(choose == 1)
+            {
+                ManageUsers();
+            }
+            else if(choose == 2)
+            {
+                return;
+            }
+            else
+            {
+                Console.WriteLine("Invalid choise! \n Try again");
+                AskToContinue();
+            }
         }
     }
 }
