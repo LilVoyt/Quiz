@@ -95,7 +95,7 @@ namespace Quiz.Service.Functionality
             }
         }
 
-        public static void AnswerQuestion()
+        public static int AnswerQuestion()
         {
             Console.WriteLine("Here are the questions: ");
             var questions = GetRandomQuestionsList();
@@ -124,6 +124,7 @@ namespace Quiz.Service.Functionality
                 }
             }
             Console.WriteLine($"Your total grade is: {grade} out of {questions.Count}");
+            return grade;
         }
 
         public static List<Question> GetRandomQuestionsList()

@@ -45,7 +45,8 @@ namespace Quiz.Service.ConsoleInterface.RealiseClass
             switch (choose)
             {
                 case 1:
-                    QuestionsInteraction.AnswerQuestion();
+                    int grade = QuestionsInteraction.AnswerQuestion();
+                    LeaderboardInteraction.AddResults(_User.Id, grade);
                     break;
                 case 2:
                     
