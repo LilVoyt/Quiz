@@ -1,4 +1,5 @@
-﻿using Quiz.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Quiz.Data;
 using Quiz.Models;
 using System;
 using System.Collections.Generic;
@@ -57,14 +58,40 @@ namespace Quiz.Service.Functionality
                                                         (q, a) => new { QuestionText = q.Text, AnswerText = a.Text, IsCorrect = a.IsCorrect })
                                                   .ToList();
 
-                foreach (var item in questionsWithAnswers)
+                var groupedQuestions = questionsWithAnswers
+                                       .GroupBy(qa => qa.QuestionText)
+                                       .ToList();
+
+                foreach (var group in groupedQuestions)
                 {
-                    Console.WriteLine($"Question: {item.QuestionText}");
-                    Console.WriteLine($"  Answer: {item.AnswerText} (Correct: {item.IsCorrect})");
+                    Console.WriteLine($"Question: {group.Key}");
+                    foreach (var answer in group)
+                    {
+                        Console.WriteLine($"  Answer: {answer.AnswerText} (Correct: {answer.IsCorrect})");
+                    }
                 }
             }
         }
 
+        public static void DeleteQuestion(string questionText) //cascad delete
+        {
+            using (var context = new QuizContext())
+            {
+                var question = context.Questions
+                                      .Include(q => q.Answers)
+                                      .FirstOrDefault(x => x.Text == questionText);
 
+                if (question == null)
+                {
+                    Console.WriteLine("Error, such question does not exist");
+                }
+                else
+                {
+                    context.Questions.Remove(question);
+                    context.SaveChanges();
+                    Console.WriteLine("Question and its answers were successfully deleted.");
+                }
+            }
+        } 
     }
 }

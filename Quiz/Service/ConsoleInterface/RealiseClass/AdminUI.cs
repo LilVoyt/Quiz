@@ -35,10 +35,12 @@ namespace Quiz.Service.ConsoleInterface.RealiseClass
             Console.WriteLine("1. Add user");
             Console.WriteLine("2. Delete user");
             Console.WriteLine("3. Add Question");
+            Console.WriteLine("4. Show all questions");
+            Console.WriteLine("5. Delete question");
             Console.WriteLine("Choose what you need (1, 2) or exit (-1):");
             int choose;
 
-            while (!int.TryParse(Console.ReadLine(), out choose) || (choose != 1 && choose != 2 && choose != 3 && choose != -1))
+            while (!int.TryParse(Console.ReadLine(), out choose) || !(choose >= 1 && choose <= 5))
             {
                 Console.WriteLine("Invalid input. Please enter 1 or 2:");
             }
@@ -65,6 +67,15 @@ namespace Quiz.Service.ConsoleInterface.RealiseClass
                     break;
                 case 3:
                     QuestionsInteraction.AddQuestionFromConsole();
+                    break;
+                case 4:
+                    Console.WriteLine("All Questions and answers:");
+                    QuestionsInteraction.DisplayAllQuestionsWithAnswers();
+                    break;
+                case 5:
+                    Console.WriteLine("Enter the text of question:");
+                    string text = Console.ReadLine();
+                    QuestionsInteraction.DeleteQuestion(text);
                     break;
                 case -1:
                     Game game = new Game();
