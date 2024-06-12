@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Quiz.Service
@@ -70,8 +71,7 @@ namespace Quiz.Service
             Console.WriteLine("Enter name:");
             string name = Console.ReadLine();
 
-            Console.WriteLine("Enter email:");
-            string email = Console.ReadLine();
+            string email = RegisterEmail();
 
             Console.WriteLine("Enter password:");
             string password = Console.ReadLine();
@@ -89,6 +89,7 @@ namespace Quiz.Service
             {
                 Console.WriteLine("Invalid role. Please enter one of the following (Admin, Moderator, User):");
             }
+
             User user = new User()
             {
                 Login = login,
@@ -102,6 +103,40 @@ namespace Quiz.Service
             _context.SaveChanges();
 
             return user;
+        }
+
+        public string RegisterEmail()
+        {
+            while (true)
+            {
+                Console.WriteLine("Enter email:");
+                string email = Console.ReadLine();
+
+                string pattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+                if (Regex.IsMatch(email, pattern))
+                {
+                    if (IsEmailUnique(email))
+                    {
+                        return email;
+                    }
+                    else
+                    {
+                        Console.WriteLine("This email is already taken. Please try another.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid email format. Please try again.");
+                }
+            }
+        }
+
+        public static bool IsEmailUnique(string email)
+        {
+            using (var context = new QuizContext())
+            {
+                return !context.Users.Any(x => x.Email == email);
+            }
         }
     }
 }

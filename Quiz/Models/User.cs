@@ -23,5 +23,6 @@ namespace Quiz.Models
         public string Password { get; set; }
         public DateTime Birthday { get; set; }
         public RoleType Role { get; set; }
+        public ICollection<Leaderboard> Leaderboards { get; set; }
     }
 }
