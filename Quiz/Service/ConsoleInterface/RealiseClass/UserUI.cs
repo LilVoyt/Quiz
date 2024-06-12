@@ -45,7 +45,7 @@ namespace Quiz.Service.ConsoleInterface.RealiseClass
             switch (choose)
             {
                 case 1:
-                    
+                    QuestionsInteraction.AnswerQuestion();
                     break;
                 case 2:
                     
