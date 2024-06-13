@@ -1,4 +1,5 @@
-﻿using Quiz.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Quiz.Data;
 using Quiz.Models;
 using System;
 using System.Collections.Generic;
@@ -28,19 +29,10 @@ namespace Quiz.Service.Functionality
                 }
             }
         }
-        public static void AddUser(string login, string name, string email, string password, DateTime birthday, RoleType role)
+        public static void AddUser(User user)
         {
             using (var context = new QuizContext())
             {
-                User user = new User()
-                {
-                    Login = login,
-                    Name = name,
-                    Email = email,
-                    Password = password,
-                    Birthday = birthday,
-                    Role = role,
-                };
                 context.Users.Add(user);
                 context.SaveChanges();
             }
@@ -54,11 +46,11 @@ namespace Quiz.Service.Functionality
             Console.WriteLine("Enter name:");
             string name = Console.ReadLine();
 
-            Console.WriteLine("Enter email:");
-            string email = Console.ReadLine();
+            string email = Authorisation.RegisterEmail();
 
             Console.WriteLine("Enter password:");
             string password = Console.ReadLine();
+            string hash = Hashing.Hash(password);
 
             Console.WriteLine("Enter birthday (yyyy-mm-dd):");
             DateTime birthday;
@@ -73,8 +65,17 @@ namespace Quiz.Service.Functionality
             {
                 Console.WriteLine("Invalid role. Please enter one of the following (Admin, Moderator, User):");
             }
-            AddUser(login, name, email, password, birthday, role);
-            Console.WriteLine("User added successfully.");
+
+            User user = new User()
+            {
+                Login = login,
+                Name = name,
+                Email = email,
+                Password = hash,
+                Birthday = birthday,
+                Role = role,
+            };
+            AddUser(user);
         }
     }
 }

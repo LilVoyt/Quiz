@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Quiz.Service.ConsoleInterface.RealiseClass
 {
-    internal class UserUI : IUserUI
+    internal class UserUI : IRoleUI
     {
         public User _User { get; set; }
         public UserUI(User user)

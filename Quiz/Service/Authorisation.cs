@@ -42,12 +42,8 @@ namespace Quiz.Service
             string login = Console.ReadLine();
             Console.WriteLine("Enter the password");
             string password = Console.ReadLine();
-            var user = _context.Users.FirstOrDefault(u => u.Login == login && u.Password == password);
-            if (user != null)
-            {
-                return user;
-            }
-            else
+            var user = _context.Users.FirstOrDefault(u => u.Login == login);
+            if (user == null || !Hashing.Verify(password, user.Password))
             {
                 Console.WriteLine("User with this login not exist");
                 Console.WriteLine("Type 1 - Login again, 2 - SignUp");
@@ -59,6 +55,10 @@ namespace Quiz.Service
                     case 2:
                         return SignUp();
                 }
+            }
+            else
+            {
+                return user;
             }
             return null;
         }
@@ -75,6 +75,7 @@ namespace Quiz.Service
 
             Console.WriteLine("Enter password:");
             string password = Console.ReadLine();
+            string hash = Hashing.Hash(password);
 
             Console.WriteLine("Enter birthday (yyyy-mm-dd):");
             DateTime birthday;
@@ -95,7 +96,7 @@ namespace Quiz.Service
                 Login = login,
                 Name = name,
                 Email = email,
-                Password = password,
+                Password = hash,
                 Birthday = birthday,
                 Role = role,
             };
@@ -105,7 +106,7 @@ namespace Quiz.Service
             return user;
         }
 
-        public string RegisterEmail()
+        public static string RegisterEmail()
         {
             while (true)
             {

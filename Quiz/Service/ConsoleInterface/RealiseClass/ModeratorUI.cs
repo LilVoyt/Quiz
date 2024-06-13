@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Quiz.Service.ConsoleInterface.RealiseClass
 {
-    internal class ModeratorUI : IModeratorUI
+    internal class ModeratorUI : IRoleUI
     {
         public User _User { get; set; }
         public ModeratorUI(User user)

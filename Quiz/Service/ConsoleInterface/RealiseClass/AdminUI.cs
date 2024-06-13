@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Quiz.Service.ConsoleInterface.RealiseClass
 {
-    internal class AdminUI : IAdminUI
+    internal class AdminUI : IRoleUI
     {
         public User _User {  get; set; }
         public AdminUI(User user)
@@ -39,7 +39,7 @@ namespace Quiz.Service.ConsoleInterface.RealiseClass
             Console.WriteLine("Choose what you need (1 - 5) or exit (-1):");
             int choose;
 
-            while (!int.TryParse(Console.ReadLine(), out choose) || !(choose >= 1 && choose <= 5))
+            while (!int.TryParse(Console.ReadLine(), out choose) || !(choose >= 1 && choose <= 5 || choose == -1))
             {
                 Console.WriteLine("Invalid input. Please enter (1 - 5) or (-1):");
             }
