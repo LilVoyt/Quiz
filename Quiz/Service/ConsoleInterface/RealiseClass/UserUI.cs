@@ -23,10 +23,6 @@ namespace Quiz.Service.ConsoleInterface.RealiseClass
             Console.WriteLine("3. Delete my account");
         }
 
-        public void TakeQuiz()
-        {
-            Console.WriteLine("Taking quiz...");
-        }
 
 
         public void ChooseFunction()

@@ -8,6 +8,6 @@ namespace Quiz.Service.ConsoleInterface.Interfaces
 {
     internal interface IAdminUI : IRoleUI
     {
-        void ManageUsers();
+        void Functionality();
     }
 }

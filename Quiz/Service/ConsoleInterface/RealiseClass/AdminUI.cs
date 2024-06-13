@@ -20,15 +20,14 @@ namespace Quiz.Service.ConsoleInterface.RealiseClass
         {
             Console.WriteLine("1. Manage Users");
             Console.WriteLine("2. View Reports");
-            Console.WriteLine("You choosed right think!");
         }
 
         public void ChooseFunction()
         {
-            ManageUsers();
+            Functionality();
         }
 
-        public void ManageUsers()
+        public void Functionality()
         {
             Console.Clear();
             Thread.Sleep(1000);
@@ -37,12 +36,12 @@ namespace Quiz.Service.ConsoleInterface.RealiseClass
             Console.WriteLine("3. Add Question");
             Console.WriteLine("4. Show all questions");
             Console.WriteLine("5. Delete question");
-            Console.WriteLine("Choose what you need (1, 2) or exit (-1):");
+            Console.WriteLine("Choose what you need (1 - 5) or exit (-1):");
             int choose;
 
             while (!int.TryParse(Console.ReadLine(), out choose) || !(choose >= 1 && choose <= 5))
             {
-                Console.WriteLine("Invalid input. Please enter 1 or 2:");
+                Console.WriteLine("Invalid input. Please enter (1 - 5) or (-1):");
             }
 
             Console.Clear();
@@ -67,15 +66,18 @@ namespace Quiz.Service.ConsoleInterface.RealiseClass
                     break;
                 case 3:
                     QuestionsInteraction.AddQuestionFromConsole();
+                    AskToContinue();
                     break;
                 case 4:
-                    Console.WriteLine("All Questions and answers:");
-                    QuestionsInteraction.DisplayAllQuestionsWithAnswers();
+                    string topic = QuestionsInteraction.ChooseTopic();
+                    QuestionsInteraction.DisplayQuestionsWithAnswers(topic);
+                    AskToContinue();
                     break;
                 case 5:
                     Console.WriteLine("Enter the text of question:");
                     string text = Console.ReadLine();
                     QuestionsInteraction.DeleteQuestion(text);
+                    AskToContinue();
                     break;
                 case -1:
                     Game game = new Game();
@@ -93,7 +95,7 @@ namespace Quiz.Service.ConsoleInterface.RealiseClass
             int choose = int.Parse(Console.ReadLine());
             if(choose == 1)
             {
-                ManageUsers();
+                Functionality();
             }
             else if(choose == 2)
             {

@@ -17,6 +17,9 @@ namespace Quiz.Service.Functionality
             Console.WriteLine("Enter question text:");
             string questionText = Console.ReadLine();
 
+            Console.WriteLine("Enter the topic:");
+            string topic = Console.ReadLine();
+
             var answers = new List<(string answerText, bool isCorrect)>();
 
             for (int i = 0; i < 4; i++)
@@ -30,17 +33,18 @@ namespace Quiz.Service.Functionality
                 answers.Add((answerText, isCorrect));
             }
 
-            AddQuestionWithAnswers(questionText, answers);
+            AddQuestionWithAnswers(questionText, topic, answers);
             Console.WriteLine("Question and answers added successfully.");
         }
 
-        public static void AddQuestionWithAnswers(string questionText, List<(string answerText, bool isCorrect)> answers)
+        public static void AddQuestionWithAnswers(string questionText, string topic, List<(string answerText, bool isCorrect)> answers)
         {
             using (var context = new QuizContext())
             {
                 var question = new Question
                 {
                     Text = questionText,
+                    Topic = topic,
                     Answers = answers.Select(a => new Answer { Text = a.answerText, IsCorrect = a.isCorrect }).ToList()
                 };
 
@@ -53,6 +57,33 @@ namespace Quiz.Service.Functionality
             using (var context = new QuizContext())
             {
                 var questionsWithAnswers = context.Questions
+                                                  .Join(context.Answers,
+                                                        q => q.QuestionId,
+                                                        a => a.QuestionId,
+                                                        (q, a) => new { QuestionText = q.Text, AnswerText = a.Text, IsCorrect = a.IsCorrect })
+                                                  .ToList();
+
+                var groupedQuestions = questionsWithAnswers
+                                       .GroupBy(qa => qa.QuestionText)
+                                       .ToList();
+
+                foreach (var group in groupedQuestions)
+                {
+                    Console.WriteLine($"Question: {group.Key}");
+                    foreach (var answer in group)
+                    {
+                        Console.WriteLine($"  Answer: {answer.AnswerText} (Correct: {answer.IsCorrect})");
+                    }
+                }
+            }
+        }
+
+        public static void DisplayQuestionsWithAnswers(string topic)
+        {
+            using (var context = new QuizContext())
+            {
+                var questionsWithAnswers = context.Questions
+                                                  .Where(x => x.Topic == topic)
                                                   .Join(context.Answers,
                                                         q => q.QuestionId,
                                                         a => a.QuestionId,
@@ -138,6 +169,14 @@ namespace Quiz.Service.Functionality
 
                 return questions.OrderBy(q => rng.Next()).ToList();
             }
+        }
+
+        public static string ChooseTopic()
+        {
+            Console.WriteLine("Enter the topic you need(IT, ....): ");
+            string answer = Console.ReadLine();
+
+            return answer;
         }
     }
 }

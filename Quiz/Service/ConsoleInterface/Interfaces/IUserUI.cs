@@ -9,7 +9,6 @@ namespace Quiz.Service.ConsoleInterface.Interfaces
 {
     internal interface IUserUI : IRoleUI
     {
-        void TakeQuiz();
         void DeleteMyself();
     }
 }
